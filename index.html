@@ -1,0 +1,1812 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Perfect Weeks — Maryland, Wisconsin, Missouri, Virginia Tech &amp; Georgia</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;0,8..60,600;1,8..60,400&family=JetBrains+Mono:wght@400;500&display=swap');
+
+  :root{
+    --field: #0F1C14;
+    --field-dark: #0A130D;
+    --panel: #17291D;
+    --panel-line: #26402F;
+    --chalk: #F3EFE3;
+    --chalk-dim: #C9C3B2;
+    --gold: #DCA847;
+    --gold-dim: #8C6B2A;
+    --rust: #C0563F;
+    --muted: #7E9284;
+    --radius: 3px;
+
+    --team-maryland: #E4572E;
+    --team-wisconsin: #FFFFFF;
+    --team-missouri: #C98A2B;
+    --team-vt: #9C4E70;
+    --team-georgia: #A31621;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--field);
+    color:var(--chalk);
+    font-family:'Source Serif 4', Georgia, serif;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  h1,h2,h3, .display{
+    font-family:'Oswald', 'Arial Narrow', sans-serif;
+    margin:0;
+    letter-spacing:0.01em;
+  }
+
+  .wrap{
+    max-width:840px;
+    margin:0 auto;
+    padding:0 24px;
+  }
+
+  a{color:var(--gold);}
+
+  code, .mono{
+    font-family:'JetBrains Mono', monospace;
+  }
+
+  button{ font:inherit; }
+
+  :focus-visible{
+    outline:2px solid var(--gold);
+    outline-offset:3px;
+  }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    background:
+      radial-gradient(ellipse at 50% -10%, rgba(220,168,71,0.09), transparent 55%),
+      var(--field-dark);
+    border-bottom:1px solid var(--panel-line);
+    padding:64px 0 48px;
+    text-align:center;
+  }
+
+  .hero-kicker{
+    font-family:'Source Serif 4', serif;
+    font-style:italic;
+    font-size:16px;
+    color:var(--muted);
+    margin-bottom:10px;
+  }
+
+  .hero h1{
+    font-size:clamp(30px, 6vw, 46px);
+    font-weight:600;
+    color:var(--chalk);
+  }
+
+  .lineup{
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:8px;
+    margin:26px 0 40px;
+  }
+  .lineup span{
+    font-family:'Oswald', sans-serif;
+    font-size:13px;
+    font-weight:500;
+    color:var(--chalk-dim);
+    background:var(--panel);
+    border:1px solid var(--panel-line);
+    padding:6px 12px;
+    border-radius:var(--radius);
+  }
+
+  .scoreboard{
+    display:inline-flex;
+    flex-direction:column;
+    align-items:center;
+    gap:4px;
+  }
+  .scoreboard .digits{
+    font-family:'Oswald', sans-serif;
+    font-weight:700;
+    font-size:clamp(84px, 22vw, 148px);
+    line-height:0.9;
+    color:var(--gold);
+    text-shadow: 0 0 26px rgba(220,168,71,0.35);
+    background:none;
+    border:none;
+    cursor:pointer;
+    padding:0;
+  }
+  .scoreboard .digits:hover{ color: #ecc06b; }
+  .scoreboard .caption{
+    font-family:'Oswald', sans-serif;
+    font-size:15px;
+    color:var(--chalk-dim);
+    font-weight:400;
+  }
+  .scoreboard .hint{
+    font-size:13px;
+    color:var(--muted);
+    font-style:italic;
+    font-family:'Source Serif 4', serif;
+    margin-top:2px;
+  }
+
+  /* ---------- STAT ROW ---------- */
+  .stats{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    border-top:1px solid var(--panel-line);
+    border-bottom:1px solid var(--panel-line);
+  }
+  .stat{
+    padding:26px 18px;
+    text-align:center;
+    border-left:1px solid var(--panel-line);
+  }
+  .stat:first-child{ border-left:none; }
+  .stat .label{
+    font-family:'Oswald', sans-serif;
+    font-size:12.5px;
+    color:var(--muted);
+    margin-bottom:8px;
+  }
+  .stat .value{
+    font-family:'Oswald', sans-serif;
+    font-size:clamp(20px, 4vw, 26px);
+    font-weight:600;
+    color:var(--chalk);
+  }
+  .stat .sub{
+    font-size:13px;
+    color:var(--chalk-dim);
+    margin-top:4px;
+    font-family:'Source Serif 4', serif;
+  }
+
+  /* ---------- SECTIONS ---------- */
+  section{
+    padding:56px 0;
+    border-bottom:1px solid var(--panel-line);
+  }
+  section:last-of-type{ border-bottom:none; }
+
+  h2{
+    font-size:22px;
+    font-weight:600;
+    color:var(--chalk);
+    margin-bottom:6px;
+  }
+  .section-intro{
+    color:var(--chalk-dim);
+    font-size:16px;
+    max-width:62ch;
+    margin-bottom:28px;
+  }
+
+  /* ---------- RECORDS GRID ---------- */
+  .records{
+    display:grid;
+    grid-template-columns:repeat(2, 1fr);
+    gap:14px;
+  }
+  .record-card{
+    background:var(--panel);
+    border:1px solid var(--panel-line);
+    border-radius:4px;
+    padding:18px 18px 16px;
+    text-align:left;
+  }
+  .record-card .r-label{
+    font-family:'Oswald', sans-serif;
+    font-size:12px;
+    color:var(--muted);
+    margin-bottom:10px;
+  }
+  .record-card .r-value{
+    font-family:'Oswald', sans-serif;
+    font-size:22px;
+    font-weight:600;
+    color:var(--gold);
+    line-height:1.15;
+  }
+  .record-card .r-value.ongoing{ color: var(--rust); }
+  .record-card .r-detail{
+    font-size:13.5px;
+    color:var(--chalk-dim);
+    margin-top:8px;
+  }
+  .record-card .r-detail button{
+    background:none;
+    border:none;
+    color:var(--chalk);
+    text-decoration:underline;
+    text-underline-offset:2px;
+    cursor:pointer;
+    font-family:'JetBrains Mono', monospace;
+    font-size:12.5px;
+    padding:0;
+  }
+  .record-card .r-detail button:hover{ color:var(--gold); }
+  .record-card.full{ grid-column: 1 / -1; }
+
+  @media (max-width:560px){
+    .records{ grid-template-columns:1fr; }
+  }
+
+  /* ---------- TIMELINE ---------- */
+  .timeline-scroll{
+    overflow-x:auto;
+    padding-bottom:14px;
+    margin-bottom:8px;
+    -webkit-overflow-scrolling:touch;
+  }
+  .timeline-track{
+    position:relative;
+    width:2200px;
+    height:70px;
+  }
+  .timeline-line{
+    position:absolute;
+    top:34px;
+    left:0;
+    right:0;
+    height:1px;
+    background:var(--panel-line);
+  }
+  .timeline-dot{
+    position:absolute;
+    top:27px;
+    width:14px;
+    height:14px;
+    margin-left:-7px;
+    border-radius:50%;
+    background:var(--gold);
+    border:2px solid var(--field);
+    cursor:pointer;
+    padding:0;
+  }
+  .timeline-dot:hover{ background:#ecc06b; transform:scale(1.2); }
+  .timeline-tick{
+    position:absolute;
+    top:44px;
+    font-family:'JetBrains Mono', monospace;
+    font-size:11px;
+    color:var(--muted);
+    transform:translateX(-50%);
+    white-space:nowrap;
+  }
+  .timeline-tick::before{
+    content:'';
+    position:absolute;
+    top:-10px;
+    left:50%;
+    width:1px;
+    height:6px;
+    background:var(--panel-line);
+  }
+  .timeline-hint{
+    font-size:13px;
+    color:var(--muted);
+    font-style:italic;
+    margin-top:4px;
+  }
+
+  /* ---------- PERFECT WEEKS LIST (collapsible) ---------- */
+  #weeks-panel{
+    max-height:0;
+    overflow:hidden;
+    transition:max-height 0.5s ease;
+  }
+  #weeks-panel.open{
+    max-height:4000px;
+  }
+  @media (prefers-reduced-motion: reduce){
+    #weeks-panel{ transition:none; }
+  }
+
+  .decade-group{
+    margin-bottom:22px;
+  }
+  .decade-group h3{
+    font-family:'Oswald', sans-serif;
+    font-size:14px;
+    color:var(--gold-dim);
+    font-weight:500;
+    padding-bottom:6px;
+    border-bottom:1px solid var(--panel-line);
+    margin-bottom:10px;
+  }
+  .week-chips{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+  }
+  .week-chips span{
+    font-family:'JetBrains Mono', monospace;
+    font-size:12.5px;
+    color:var(--chalk);
+    background:var(--panel);
+    border:1px solid var(--panel-line);
+    padding:5px 9px;
+    border-radius:var(--radius);
+    cursor:pointer;
+  }
+  .week-chips span:hover, .week-chips span:focus-visible{
+    border-color:var(--gold-dim);
+    color:var(--gold);
+  }
+
+  /* ---------- SO CLOSE (near misses) ---------- */
+  .near-miss-list{
+    display:flex;
+    flex-direction:column;
+    gap:2px;
+  }
+  .near-miss-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:13px 4px;
+    border-bottom:1px solid var(--panel-line);
+    cursor:pointer;
+    background:none;
+    border-left:none; border-right:none; border-top:none;
+    width:100%;
+    text-align:left;
+    color:inherit;
+  }
+  .near-miss-row:last-child{ border-bottom:none; }
+  .near-miss-row:hover .nm-week{ color:var(--gold); }
+  .near-miss-row .nm-left{
+    display:flex;
+    align-items:baseline;
+    gap:12px;
+  }
+  .nm-week{
+    font-family:'JetBrains Mono', monospace;
+    font-size:13px;
+    color:var(--chalk);
+  }
+  .nm-ruiner{
+    font-family:'Oswald', sans-serif;
+    font-size:14px;
+    color:var(--rust);
+    font-weight:500;
+  }
+  .nm-ruiner .swatch{
+    display:inline-block;
+    width:8px;
+    height:8px;
+    border-radius:50%;
+    margin-right:6px;
+  }
+  .nm-arrow{
+    color:var(--muted);
+    font-size:13px;
+  }
+
+  /* ---------- RUINERS ---------- */
+  .bars{
+    display:flex;
+    flex-direction:column;
+    gap:16px;
+  }
+  .bar-row{
+    display:grid;
+    grid-template-columns:130px 1fr 46px;
+    align-items:center;
+    gap:12px;
+  }
+  .bar-row .name{
+    font-family:'Oswald', sans-serif;
+    font-size:14.5px;
+    color:var(--chalk);
+    text-align:right;
+  }
+  .bar-track{
+    background:var(--panel);
+    border:1px solid var(--panel-line);
+    height:20px;
+    border-radius:var(--radius);
+    overflow:hidden;
+  }
+  .bar-fill{
+    height:100%;
+    background:linear-gradient(90deg, var(--gold-dim), var(--rust));
+  }
+  .bar-row .count{
+    font-family:'JetBrains Mono', monospace;
+    font-size:13.5px;
+    color:var(--chalk-dim);
+  }
+  .bar-row.top .name{ color:var(--gold); }
+
+  /* ---------- FOOTER ---------- */
+  footer{
+    padding:40px 0 60px;
+    text-align:center;
+    color:var(--muted);
+    font-size:13.5px;
+  }
+  footer p{ margin:6px 0; max-width:56ch; margin-left:auto; margin-right:auto; }
+  footer a{ color:var(--muted); text-decoration:underline; text-underline-offset:2px; }
+
+  /* ---------- SCORE DIALOG ---------- */
+  .score-overlay{
+    position:fixed;
+    inset:0;
+    background:rgba(6,11,8,0.72);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+    z-index:50;
+  }
+  .score-overlay.open{ display:flex; }
+  .score-modal{
+    background:var(--field-dark);
+    border:1px solid var(--panel-line);
+    border-radius:4px;
+    max-width:480px;
+    width:100%;
+    max-height:82vh;
+    overflow-y:auto;
+    padding:26px 24px 22px;
+  }
+  .score-modal-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:baseline;
+    border-bottom:1px solid var(--panel-line);
+    padding-bottom:14px;
+    margin-bottom:16px;
+  }
+  .score-modal-head h3{
+    font-family:'Oswald', sans-serif;
+    font-size:19px;
+    font-weight:600;
+    color:var(--chalk);
+  }
+  .score-modal-head .close-btn{
+    background:none;
+    border:none;
+    color:var(--muted);
+    font-family:'Oswald', sans-serif;
+    font-size:13px;
+    cursor:pointer;
+    padding:4px 8px;
+  }
+  .score-modal-head .close-btn:hover{ color:var(--gold); }
+  .score-modal-sub{
+    font-size:13px;
+    color:var(--muted);
+    margin:-10px 0 16px;
+  }
+  .score-game{
+    padding:12px 0;
+    border-bottom:1px solid var(--panel-line);
+    display:flex;
+    gap:10px;
+  }
+  .score-game:last-child{ border-bottom:none; }
+  .score-game .team-bar{
+    width:4px;
+    border-radius:2px;
+    flex-shrink:0;
+  }
+  .score-game .game-body{ flex:1; min-width:0; }
+  .score-game .team-line{
+    display:flex;
+    justify-content:space-between;
+    align-items:baseline;
+    font-family:'Oswald', sans-serif;
+    font-size:15.5px;
+    color:var(--chalk);
+    font-weight:500;
+  }
+  .score-game.is-loss .team-line .team-name{ color: var(--rust); }
+  .score-game .team-line .score{
+    font-family:'JetBrains Mono', monospace;
+    color:var(--gold);
+    font-size:15px;
+  }
+  .score-game.is-loss .team-line .score{ color: var(--rust); }
+  .score-game .opp-line{
+    font-size:13.5px;
+    color:var(--chalk-dim);
+    margin-top:3px;
+    font-family:'Source Serif 4', serif;
+  }
+  .score-game .date-line{
+    font-size:12px;
+    color:var(--muted);
+    margin-top:1px;
+    font-family:'JetBrains Mono', monospace;
+  }
+
+  @media (max-width:560px){
+    .stats{ grid-template-columns:1fr; }
+    .stat{ border-left:none; border-top:1px solid var(--panel-line); }
+    .stat:first-child{ border-top:none; }
+    .bar-row{ grid-template-columns:88px 1fr 38px; }
+    .bar-row .name{ font-size:13px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="wrap">
+    <div class="hero-kicker">A family tradition, tracked since 1921</div>
+    <h1>The Perfect Weeks</h1>
+    <div class="lineup" id="lineup"></div>
+
+    <div class="scoreboard">
+      <button class="digits" id="totalDigits" aria-expanded="false" aria-controls="weeks-panel">54</button>
+      <div class="caption">Perfect Weeks on record</div>
+      <div class="hint">tap the number to see every week</div>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="stats">
+    <div class="stat">
+      <div class="label">Last Perfect Week</div>
+      <div class="value mono" id="lastWeek">—</div>
+      <div class="sub" id="lastWeekSub"></div>
+    </div>
+    <div class="stat">
+      <div class="label">First Perfect Week</div>
+      <div class="value mono" id="firstWeek">—</div>
+      <div class="sub" id="firstWeekSub"></div>
+    </div>
+    <div class="stat">
+      <div class="label">Most Frequent Ruiner</div>
+      <div class="value" id="topRuiner">—</div>
+      <div class="sub" id="topRuinerSub"></div>
+    </div>
+  </div>
+
+  <section id="records-section">
+    <h2>Records</h2>
+    <p class="section-intro">The extremes — the longest dry spells, the weeks that came in back-to-back, and the games that made it interesting (or didn't).</p>
+    <div class="records" id="recordsGrid"></div>
+  </section>
+
+  <section id="timeline-section">
+    <h2>Timeline</h2>
+    <p class="section-intro">Every Perfect Week from 1921 to today, plotted in order. Scroll sideways, click a dot for the scores.</p>
+    <div class="timeline-scroll">
+      <div class="timeline-track" id="timelineTrack"></div>
+    </div>
+    <div class="timeline-hint">← scroll to see the full history →</div>
+  </section>
+
+  <section id="weeks-section">
+    <h2>Every Perfect Week</h2>
+    <p class="section-intro">All five teams have to play, and all five have to win, in the same week of the college football season. A bye doesn't break the streak — it just means that team wasn't in play that week, so the week doesn't count toward the total either way. Click any week to see the final scores.</p>
+    <div id="weeks-panel"><div id="weeksList"></div></div>
+  </section>
+
+  <section id="so-close-section">
+    <h2>So Close</h2>
+    <p class="section-intro">The 10 most recent weeks that came down to just one team — all five played, four won, one didn't.</p>
+    <div class="near-miss-list" id="nearMissList"></div>
+  </section>
+
+  <section>
+    <h2>Who Ruins It Most</h2>
+    <p class="section-intro">Counted only in weeks where all five teams actually played and exactly one of them lost — the clean, undisputed spoiler.</p>
+    <div class="bars" id="bars"></div>
+  </section>
+
+
+</div>
+
+<footer>
+  <p>Teams tracked: Maryland, Wisconsin, Missouri, Virginia Tech, Georgia. Week numbers follow the college football season calendar (Week 1 starts with each team's season opener), not the plain calendar year.</p>
+  <p>Historical scores from <a href="https://www.jhowell.net/cf/scores/byname.htm" target="_blank" rel="noopener">jhowell.net</a>.</p>
+</footer>
+
+<div class="score-overlay" id="scoreOverlay">
+  <div class="score-modal" role="dialog" aria-modal="true" aria-labelledby="scoreModalTitle">
+    <div class="score-modal-head">
+      <h3 id="scoreModalTitle">Week</h3>
+      <button class="close-btn" id="scoreCloseBtn">Close</button>
+    </div>
+    <div class="score-modal-sub" id="scoreModalSub"></div>
+    <div id="scoreGames"></div>
+  </div>
+</div>
+
+<script>
+const DATA = {
+  "metadata": {
+    "name": "Perfect Weeks",
+    "teams": [
+      "Maryland",
+      "Wisconsin",
+      "Missouri",
+      "Virginia Tech",
+      "Georgia"
+    ],
+    "dataSource": "https://www.jhowell.net/cf/scores/byname.htm"
+  },
+  "summary": {
+    "totalPerfectWeeks": 54,
+    "lastPerfectWeek": "2024-W8",
+    "firstPerfectWeek": "1921-W2",
+    "mostCommonRuiner": "Maryland"
+  },
+  "perfectWeeks": [
+    "1921-W2",
+    "1923-W2",
+    "1927-W2",
+    "1930-W7",
+    "1941-W5",
+    "1942-W6",
+    "1947-W7",
+    "1947-W8",
+    "1953-W2",
+    "1954-W5",
+    "1957-W4",
+    "1960-W7",
+    "1962-W5",
+    "1963-W5",
+    "1974-W7",
+    "1976-W8",
+    "1980-W7",
+    "1981-W4",
+    "1983-W8",
+    "1985-W10",
+    "1986-W3",
+    "1986-W9",
+    "1993-W7",
+    "1998-W1",
+    "1999-W1",
+    "2002-W10",
+    "2003-W7",
+    "2003-W12",
+    "2005-W1",
+    "2006-W1",
+    "2006-W2",
+    "2006-W8",
+    "2007-W1",
+    "2007-W11",
+    "2008-W3",
+    "2009-W2",
+    "2010-W8",
+    "2010-W13",
+    "2012-W1",
+    "2013-W2",
+    "2013-W4",
+    "2014-W5",
+    "2015-W3",
+    "2017-W1",
+    "2017-W9",
+    "2018-W1",
+    "2018-W2",
+    "2019-W2",
+    "2019-W6",
+    "2021-W9",
+    "2022-W3",
+    "2023-W1",
+    "2023-W13",
+    "2024-W8"
+  ],
+  "ruiners": {
+    "Maryland": 47,
+    "Wisconsin": 34,
+    "Virginia Tech": 30,
+    "Missouri": 26,
+    "Georgia": 15
+  },
+  "stats": {
+    "longestDrought": {
+      "days": 4011,
+      "from": "1930-W7",
+      "to": "1941-W5"
+    },
+    "currentDrought": {
+      "since": "2024-W8",
+      "days": 744
+    },
+    "backToBack": [
+      [
+        1947,
+        7,
+        8
+      ],
+      [
+        2006,
+        1,
+        2
+      ],
+      [
+        2018,
+        1,
+        2
+      ]
+    ],
+    "biggestBlowout": {
+      "label": "2019-W2",
+      "margin": 195
+    },
+    "closestCall": {
+      "label": "1923-W2",
+      "margin": 38
+    }
+  },
+  "timeline": [
+    {
+      "label": "1921-W2",
+      "date": "1921-09-20"
+    },
+    {
+      "label": "1923-W2",
+      "date": "1923-09-25"
+    },
+    {
+      "label": "1927-W2",
+      "date": "1927-09-20"
+    },
+    {
+      "label": "1930-W7",
+      "date": "1930-09-23"
+    },
+    {
+      "label": "1941-W5",
+      "date": "1941-09-16"
+    },
+    {
+      "label": "1942-W6",
+      "date": "1942-09-15"
+    },
+    {
+      "label": "1947-W7",
+      "date": "1947-09-16"
+    },
+    {
+      "label": "1947-W8",
+      "date": "1947-09-16"
+    },
+    {
+      "label": "1953-W2",
+      "date": "1953-09-15"
+    },
+    {
+      "label": "1954-W5",
+      "date": "1954-09-14"
+    },
+    {
+      "label": "1957-W4",
+      "date": "1957-09-17"
+    },
+    {
+      "label": "1960-W7",
+      "date": "1960-09-13"
+    },
+    {
+      "label": "1962-W5",
+      "date": "1962-09-11"
+    },
+    {
+      "label": "1963-W5",
+      "date": "1963-09-17"
+    },
+    {
+      "label": "1974-W7",
+      "date": "1974-09-10"
+    },
+    {
+      "label": "1976-W8",
+      "date": "1976-08-31"
+    },
+    {
+      "label": "1980-W7",
+      "date": "1980-09-02"
+    },
+    {
+      "label": "1981-W4",
+      "date": "1981-09-01"
+    },
+    {
+      "label": "1983-W8",
+      "date": "1983-08-30"
+    },
+    {
+      "label": "1985-W10",
+      "date": "1985-08-27"
+    },
+    {
+      "label": "1986-W3",
+      "date": "1986-08-26"
+    },
+    {
+      "label": "1986-W9",
+      "date": "1986-08-26"
+    },
+    {
+      "label": "1993-W7",
+      "date": "1993-08-31"
+    },
+    {
+      "label": "1998-W1",
+      "date": "1998-09-01"
+    },
+    {
+      "label": "1999-W1",
+      "date": "1999-08-31"
+    },
+    {
+      "label": "2002-W10",
+      "date": "2002-08-20"
+    },
+    {
+      "label": "2003-W7",
+      "date": "2003-08-26"
+    },
+    {
+      "label": "2003-W12",
+      "date": "2003-08-26"
+    },
+    {
+      "label": "2005-W1",
+      "date": "2005-08-30"
+    },
+    {
+      "label": "2006-W1",
+      "date": "2006-08-29"
+    },
+    {
+      "label": "2006-W2",
+      "date": "2006-08-29"
+    },
+    {
+      "label": "2006-W8",
+      "date": "2006-08-29"
+    },
+    {
+      "label": "2007-W1",
+      "date": "2007-08-28"
+    },
+    {
+      "label": "2007-W11",
+      "date": "2007-08-28"
+    },
+    {
+      "label": "2008-W3",
+      "date": "2008-08-26"
+    },
+    {
+      "label": "2009-W2",
+      "date": "2009-09-01"
+    },
+    {
+      "label": "2010-W8",
+      "date": "2010-08-31"
+    },
+    {
+      "label": "2010-W13",
+      "date": "2010-08-31"
+    },
+    {
+      "label": "2012-W1",
+      "date": "2012-08-28"
+    },
+    {
+      "label": "2013-W2",
+      "date": "2013-08-27"
+    },
+    {
+      "label": "2013-W4",
+      "date": "2013-08-27"
+    },
+    {
+      "label": "2014-W5",
+      "date": "2014-08-26"
+    },
+    {
+      "label": "2015-W3",
+      "date": "2015-09-01"
+    },
+    {
+      "label": "2017-W1",
+      "date": "2017-08-29"
+    },
+    {
+      "label": "2017-W9",
+      "date": "2017-08-29"
+    },
+    {
+      "label": "2018-W1",
+      "date": "2018-08-28"
+    },
+    {
+      "label": "2018-W2",
+      "date": "2018-08-28"
+    },
+    {
+      "label": "2019-W2",
+      "date": "2019-08-27"
+    },
+    {
+      "label": "2019-W6",
+      "date": "2019-08-27"
+    },
+    {
+      "label": "2021-W9",
+      "date": "2021-08-31"
+    },
+    {
+      "label": "2022-W3",
+      "date": "2022-08-30"
+    },
+    {
+      "label": "2023-W1",
+      "date": "2023-08-29"
+    },
+    {
+      "label": "2023-W13",
+      "date": "2023-08-29"
+    },
+    {
+      "label": "2024-W8",
+      "date": "2024-08-27"
+    }
+  ],
+  "recentNearMisses": [
+    {
+      "label": "2026-W1",
+      "season": 2026,
+      "week": 1,
+      "ruiner": "Wisconsin",
+      "minDate": "2026-09-03",
+      "maxDate": "2026-09-06",
+      "games": [
+        {
+          "team": "Missouri",
+          "date": "2026-09-03",
+          "venue": "vs.",
+          "opponent": "Arkansas-Pine Bluff",
+          "pf": 54,
+          "pa": 14
+        },
+        {
+          "team": "Maryland",
+          "date": "2026-09-05",
+          "venue": "vs.",
+          "opponent": "Hampton",
+          "pf": 62,
+          "pa": 0
+        },
+        {
+          "team": "Virginia Tech",
+          "date": "2026-09-05",
+          "venue": "vs.",
+          "opponent": "VMI",
+          "pf": 73,
+          "pa": 3
+        },
+        {
+          "team": "Georgia",
+          "date": "2026-09-05",
+          "venue": "vs.",
+          "opponent": "Tennessee State",
+          "pf": 63,
+          "pa": 3
+        },
+        {
+          "team": "Wisconsin",
+          "date": "2026-09-06",
+          "venue": "vs.",
+          "opponent": "Notre Dame",
+          "pf": 13,
+          "pa": 41
+        }
+      ]
+    },
+    {
+      "label": "2025-W2",
+      "season": 2025,
+      "week": 2,
+      "ruiner": "Virginia Tech",
+      "minDate": "2025-09-05",
+      "maxDate": "2025-09-06",
+      "games": [
+        {
+          "team": "Maryland",
+          "date": "2025-09-05",
+          "venue": "vs.",
+          "opponent": "Northern Illinois(3-9)",
+          "pf": 20,
+          "pa": 9
+        },
+        {
+          "team": "Wisconsin",
+          "date": "2025-09-06",
+          "venue": "vs.",
+          "opponent": "Middle Tennessee State(3-9)",
+          "pf": 42,
+          "pa": 10
+        },
+        {
+          "team": "Missouri",
+          "date": "2025-09-06",
+          "venue": "vs.",
+          "opponent": "Kansas(5-7)",
+          "pf": 42,
+          "pa": 31
+        },
+        {
+          "team": "Virginia Tech",
+          "date": "2025-09-06",
+          "venue": "vs.",
+          "opponent": "Vanderbilt(10-3)",
+          "pf": 20,
+          "pa": 44
+        },
+        {
+          "team": "Georgia",
+          "date": "2025-09-06",
+          "venue": "vs.",
+          "opponent": "Austin Peay (non-IA)",
+          "pf": 28,
+          "pa": 6
+        }
+      ]
+    },
+    {
+      "label": "2025-W1",
+      "season": 2025,
+      "week": 1,
+      "ruiner": "Virginia Tech",
+      "minDate": "2025-08-28",
+      "maxDate": "2025-08-31",
+      "games": [
+        {
+          "team": "Wisconsin",
+          "date": "2025-08-28",
+          "venue": "vs.",
+          "opponent": "Miami (Ohio)(7-7)",
+          "pf": 17,
+          "pa": 0
+        },
+        {
+          "team": "Missouri",
+          "date": "2025-08-28",
+          "venue": "vs.",
+          "opponent": "Central Arkansas (non-IA)",
+          "pf": 61,
+          "pa": 6
+        },
+        {
+          "team": "Maryland",
+          "date": "2025-08-30",
+          "venue": "vs.",
+          "opponent": "Florida Atlantic(4-8)",
+          "pf": 39,
+          "pa": 7
+        },
+        {
+          "team": "Georgia",
+          "date": "2025-08-30",
+          "venue": "vs.",
+          "opponent": "Marshall(5-7)",
+          "pf": 45,
+          "pa": 7
+        },
+        {
+          "team": "Virginia Tech",
+          "date": "2025-08-31",
+          "venue": "vs.",
+          "opponent": "South Carolina(4-8)",
+          "pf": 11,
+          "pa": 24
+        }
+      ]
+    },
+    {
+      "label": "2024-W3",
+      "season": 2024,
+      "week": 3,
+      "ruiner": "Wisconsin",
+      "minDate": "2024-09-14",
+      "maxDate": "2024-09-14",
+      "games": [
+        {
+          "team": "Maryland",
+          "date": "2024-09-14",
+          "venue": "@",
+          "opponent": "Virginia(5-7)",
+          "pf": 27,
+          "pa": 13
+        },
+        {
+          "team": "Wisconsin",
+          "date": "2024-09-14",
+          "venue": "vs.",
+          "opponent": "Alabama(9-4)",
+          "pf": 10,
+          "pa": 42
+        },
+        {
+          "team": "Missouri",
+          "date": "2024-09-14",
+          "venue": "vs.",
+          "opponent": "Boston College(7-6)",
+          "pf": 27,
+          "pa": 21
+        },
+        {
+          "team": "Virginia Tech",
+          "date": "2024-09-14",
+          "venue": "@",
+          "opponent": "Old Dominion(5-7)",
+          "pf": 37,
+          "pa": 17
+        },
+        {
+          "team": "Georgia",
+          "date": "2024-09-14",
+          "venue": "@",
+          "opponent": "*Kentucky(4-8)",
+          "pf": 13,
+          "pa": 12
+        }
+      ]
+    },
+    {
+      "label": "2024-W2",
+      "season": 2024,
+      "week": 2,
+      "ruiner": "Maryland",
+      "minDate": "2024-09-07",
+      "maxDate": "2024-09-07",
+      "games": [
+        {
+          "team": "Maryland",
+          "date": "2024-09-07",
+          "venue": "vs.",
+          "opponent": "*Michigan State(5-7)",
+          "pf": 24,
+          "pa": 27
+        },
+        {
+          "team": "Wisconsin",
+          "date": "2024-09-07",
+          "venue": "vs.",
+          "opponent": "South Dakota (non-IA)",
+          "pf": 27,
+          "pa": 13
+        },
+        {
+          "team": "Missouri",
+          "date": "2024-09-07",
+          "venue": "vs.",
+          "opponent": "Buffalo(9-4)",
+          "pf": 38,
+          "pa": 0
+        },
+        {
+          "team": "Virginia Tech",
+          "date": "2024-09-07",
+          "venue": "vs.",
+          "opponent": "Marshall(10-3)",
+          "pf": 31,
+          "pa": 14
+        },
+        {
+          "team": "Georgia",
+          "date": "2024-09-07",
+          "venue": "vs.",
+          "opponent": "Tennessee Tech (non-IA)",
+          "pf": 48,
+          "pa": 3
+        }
+      ]
+    },
+    {
+      "label": "2024-W1",
+      "season": 2024,
+      "week": 1,
+      "ruiner": "Virginia Tech",
+      "minDate": "2024-08-29",
+      "maxDate": "2024-08-31",
+      "games": [
+        {
+          "team": "Missouri",
+          "date": "2024-08-29",
+          "venue": "vs.",
+          "opponent": "Murray State (non-IA)",
+          "pf": 51,
+          "pa": 0
+        },
+        {
+          "team": "Wisconsin",
+          "date": "2024-08-30",
+          "venue": "vs.",
+          "opponent": "Western Michigan(6-7)",
+          "pf": 28,
+          "pa": 14
+        },
+        {
+          "team": "Maryland",
+          "date": "2024-08-31",
+          "venue": "vs.",
+          "opponent": "Connecticut(9-4)",
+          "pf": 50,
+          "pa": 7
+        },
+        {
+          "team": "Virginia Tech",
+          "date": "2024-08-31",
+          "venue": "@",
+          "opponent": "Vanderbilt(7-6)",
+          "pf": 27,
+          "pa": 34
+        },
+        {
+          "team": "Georgia",
+          "date": "2024-08-31",
+          "venue": "vs.",
+          "opponent": "Clemson(10-4)",
+          "pf": 34,
+          "pa": 3
+        }
+      ]
+    },
+    {
+      "label": "2023-W18",
+      "season": 2023,
+      "week": 18,
+      "ruiner": "Wisconsin",
+      "minDate": "2023-12-27",
+      "maxDate": "2024-01-01",
+      "games": [
+        {
+          "team": "Virginia Tech",
+          "date": "2023-12-27",
+          "venue": "vs.",
+          "opponent": "Tulane(11-3)",
+          "pf": 41,
+          "pa": 20
+        },
+        {
+          "team": "Missouri",
+          "date": "2023-12-29",
+          "venue": "vs.",
+          "opponent": "Ohio State(11-2)",
+          "pf": 14,
+          "pa": 3
+        },
+        {
+          "team": "Maryland",
+          "date": "2023-12-30",
+          "venue": "vs.",
+          "opponent": "Auburn(6-7)",
+          "pf": 31,
+          "pa": 13
+        },
+        {
+          "team": "Georgia",
+          "date": "2023-12-30",
+          "venue": "vs.",
+          "opponent": "Florida State(13-1)",
+          "pf": 63,
+          "pa": 3
+        },
+        {
+          "team": "Wisconsin",
+          "date": "2024-01-01",
+          "venue": "vs.",
+          "opponent": "Louisiana State(10-3)",
+          "pf": 31,
+          "pa": 35
+        }
+      ]
+    },
+    {
+      "label": "2023-W11",
+      "season": 2023,
+      "week": 11,
+      "ruiner": "Wisconsin",
+      "minDate": "2023-11-11",
+      "maxDate": "2023-11-11",
+      "games": [
+        {
+          "team": "Maryland",
+          "date": "2023-11-11",
+          "venue": "@",
+          "opponent": "*Nebraska(5-7)",
+          "pf": 13,
+          "pa": 10
+        },
+        {
+          "team": "Wisconsin",
+          "date": "2023-11-11",
+          "venue": "vs.",
+          "opponent": "*Northwestern(8-5)",
+          "pf": 10,
+          "pa": 24
+        },
+        {
+          "team": "Missouri",
+          "date": "2023-11-11",
+          "venue": "vs.",
+          "opponent": "*Tennessee(9-4)",
+          "pf": 36,
+          "pa": 7
+        },
+        {
+          "team": "Virginia Tech",
+          "date": "2023-11-11",
+          "venue": "@",
+          "opponent": "*Boston College(7-6)",
+          "pf": 48,
+          "pa": 22
+        },
+        {
+          "team": "Georgia",
+          "date": "2023-11-11",
+          "venue": "vs.",
+          "opponent": "*Mississippi(11-2)",
+          "pf": 52,
+          "pa": 17
+        }
+      ]
+    },
+    {
+      "label": "2023-W4",
+      "season": 2023,
+      "week": 4,
+      "ruiner": "Virginia Tech",
+      "minDate": "2023-09-22",
+      "maxDate": "2023-09-23",
+      "games": [
+        {
+          "team": "Wisconsin",
+          "date": "2023-09-22",
+          "venue": "@",
+          "opponent": "*Purdue(4-8)",
+          "pf": 38,
+          "pa": 17
+        },
+        {
+          "team": "Maryland",
+          "date": "2023-09-23",
+          "venue": "@",
+          "opponent": "*Michigan State(4-8)",
+          "pf": 31,
+          "pa": 9
+        },
+        {
+          "team": "Missouri",
+          "date": "2023-09-23",
+          "venue": "vs.",
+          "opponent": "Memphis(10-3)",
+          "pf": 34,
+          "pa": 27
+        },
+        {
+          "team": "Virginia Tech",
+          "date": "2023-09-23",
+          "venue": "@",
+          "opponent": "Marshall(6-7)",
+          "pf": 17,
+          "pa": 24
+        },
+        {
+          "team": "Georgia",
+          "date": "2023-09-23",
+          "venue": "vs.",
+          "opponent": "Alabama-Birmingham(4-8)",
+          "pf": 49,
+          "pa": 21
+        }
+      ]
+    },
+    {
+      "label": "2023-W3",
+      "season": 2023,
+      "week": 3,
+      "ruiner": "Virginia Tech",
+      "minDate": "2023-09-15",
+      "maxDate": "2023-09-16",
+      "games": [
+        {
+          "team": "Maryland",
+          "date": "2023-09-15",
+          "venue": "vs.",
+          "opponent": "Virginia(3-9)",
+          "pf": 42,
+          "pa": 14
+        },
+        {
+          "team": "Wisconsin",
+          "date": "2023-09-16",
+          "venue": "vs.",
+          "opponent": "Georgia Southern(6-7)",
+          "pf": 35,
+          "pa": 14
+        },
+        {
+          "team": "Missouri",
+          "date": "2023-09-16",
+          "venue": "vs.",
+          "opponent": "Kansas State(9-4)",
+          "pf": 30,
+          "pa": 27
+        },
+        {
+          "team": "Virginia Tech",
+          "date": "2023-09-16",
+          "venue": "@",
+          "opponent": "Rutgers(7-6)",
+          "pf": 16,
+          "pa": 35
+        },
+        {
+          "team": "Georgia",
+          "date": "2023-09-16",
+          "venue": "vs.",
+          "opponent": "*South Carolina(5-7)",
+          "pf": 24,
+          "pa": 14
+        }
+      ]
+    }
+  ]
+};
+const SCORES = {"1921-W2":[{"team":"Maryland","date":"1921-10-01","venue":"@","opponent":"Rutgers(4-5)","pf":3,"pa":0},{"team":"Wisconsin","date":"1921-10-01","venue":"vs.","opponent":"Lawrence (non-IA)","pf":28,"pa":0},{"team":"Missouri","date":"1921-10-01","venue":"vs.","opponent":"Oklahoma State(5-4-1)","pf":36,"pa":0},{"team":"Virginia Tech","date":"1921-10-01","venue":"vs.","opponent":"William & Mary (non-IA)","pf":14,"pa":0},{"team":"Georgia","date":"1921-10-01","venue":"vs.","opponent":"Mercer(3-6)","pf":28,"pa":0}],"1923-W2":[{"team":"Maryland","date":"1923-10-06","venue":"@","opponent":"Pennsylvania(5-4)","pf":3,"pa":0},{"team":"Wisconsin","date":"1923-10-06","venue":"vs.","opponent":"Coe (non-IA)","pf":7,"pa":3},{"team":"Missouri","date":"1923-10-06","venue":"vs.","opponent":"Missouri State (non-IA)","pf":10,"pa":0},{"team":"Virginia Tech","date":"1923-10-06","venue":"vs.","opponent":"Davidson(3-7)","pf":7,"pa":0},{"team":"Georgia","date":"1923-10-06","venue":"vs.","opponent":"Oglethorpe(5-6)","pf":20,"pa":6}],"1927-W2":[{"team":"Maryland","date":"1927-10-01","venue":"vs.","opponent":"*South Carolina(4-5)","pf":26,"pa":0},{"team":"Wisconsin","date":"1927-10-01","venue":"vs.","opponent":"Cornell (Iowa) (non-IA)","pf":31,"pa":6},{"team":"Missouri","date":"1927-10-01","venue":"vs.","opponent":"*Kansas State(3-5)","pf":13,"pa":6},{"team":"Virginia Tech","date":"1927-10-01","venue":"vs.","opponent":"Hampden-Sydney (non-IA)","pf":13,"pa":0},{"team":"Georgia","date":"1927-10-01","venue":"vs.","opponent":"*Virginia(5-4)","pf":32,"pa":0}],"1930-W7":[{"team":"Maryland","date":"1930-11-08","venue":"vs.","opponent":"*Washington & Lee(3-6-1)","pf":41,"pa":7},{"team":"Wisconsin","date":"1930-11-08","venue":"vs.","opponent":"South Dakota State (non-IA)","pf":58,"pa":7},{"team":"Missouri","date":"1930-11-08","venue":"vs.","opponent":"*Iowa State(0-9)","pf":14,"pa":0},{"team":"Virginia Tech","date":"1930-11-08","venue":"vs.","opponent":"*Virginia(4-6)","pf":34,"pa":13},{"team":"Georgia","date":"1930-11-08","venue":"vs.","opponent":"New York University(7-3)","pf":7,"pa":6}],"1941-W5":[{"team":"Maryland","date":"1941-10-18","venue":"vs.","opponent":"Florida(4-6)","pf":13,"pa":12},{"team":"Wisconsin","date":"1941-10-18","venue":"vs.","opponent":"*Iowa(3-5)","pf":23,"pa":0},{"team":"Missouri","date":"1941-10-18","venue":"@","opponent":"*Iowa State(2-6-1)","pf":39,"pa":13},{"team":"Virginia Tech","date":"1941-10-18","venue":"@","opponent":"*Davidson(1-6-3)","pf":16,"pa":0},{"team":"Georgia","date":"1941-10-18","venue":"@","opponent":"Columbia(3-5)","pf":7,"pa":3}],"1942-W6":[{"team":"Maryland","date":"1942-10-24","venue":"vs.","opponent":"McDaniel (non-IA)","pf":51,"pa":0},{"team":"Wisconsin","date":"1942-10-24","venue":"@","opponent":"*Purdue(1-8)","pf":13,"pa":0},{"team":"Missouri","date":"1942-10-24","venue":"vs.","opponent":"*Iowa State(3-6)","pf":45,"pa":6},{"team":"Virginia Tech","date":"1942-10-24","venue":"vs.","opponent":"*Washington & Lee(1-8)","pf":19,"pa":6},{"team":"Georgia","date":"1942-10-24","venue":"@","opponent":"Cincinnati (non-IA)","pf":35,"pa":13}],"1947-W7":[{"team":"Virginia Tech","date":"1947-10-31","venue":"@","opponent":"*George Washington(1-7-1)","pf":42,"pa":6},{"team":"Georgia","date":"1947-10-31","venue":"vs.","opponent":"Clemson(4-5)","pf":21,"pa":6},{"team":"Maryland","date":"1947-11-01","venue":"vs.","opponent":"West Virginia(6-4)","pf":27,"pa":0},{"team":"Wisconsin","date":"1947-11-01","venue":"@","opponent":"*Northwestern(3-6)","pf":29,"pa":0},{"team":"Missouri","date":"1947-11-01","venue":"vs.","opponent":"*Nebraska(2-7)","pf":47,"pa":6}],"1947-W8":[{"team":"Maryland","date":"1947-11-08","venue":"@","opponent":"Duquesne(2-8)","pf":32,"pa":0},{"team":"Wisconsin","date":"1947-11-08","venue":"vs.","opponent":"*Iowa(3-5-1)","pf":46,"pa":14},{"team":"Missouri","date":"1947-11-08","venue":"@","opponent":"Duke(4-3-2)","pf":28,"pa":7},{"team":"Virginia Tech","date":"1947-11-08","venue":"vs.","opponent":"*Washington & Lee(5-5)","pf":27,"pa":14},{"team":"Georgia","date":"1947-11-08","venue":"vs.","opponent":"*Florida(4-5-1)","pf":34,"pa":6}],"1953-W2":[{"team":"Maryland","date":"1953-09-26","venue":"vs.","opponent":"Washington & Lee(4-6)","pf":52,"pa":0},{"team":"Wisconsin","date":"1953-09-26","venue":"vs.","opponent":"Penn State(6-3)","pf":20,"pa":0},{"team":"Missouri","date":"1953-09-26","venue":"vs.","opponent":"Purdue(2-7)","pf":14,"pa":7},{"team":"Virginia Tech","date":"1953-09-26","venue":"@","opponent":"Virginia(1-8)","pf":20,"pa":6},{"team":"Georgia","date":"1953-09-26","venue":"vs.","opponent":"*Tulane(1-8-1)","pf":16,"pa":14}],"1954-W5":[{"team":"Maryland","date":"1954-10-16","venue":"vs.","opponent":"*North Carolina(4-5-1)","pf":33,"pa":0},{"team":"Wisconsin","date":"1954-10-16","venue":"vs.","opponent":"*Purdue(5-3-1)","pf":20,"pa":6},{"team":"Missouri","date":"1954-10-16","venue":"vs.","opponent":"Indiana(3-6)","pf":20,"pa":14},{"team":"Virginia Tech","date":"1954-10-16","venue":"@","opponent":"*Richmond(5-4)","pf":19,"pa":12},{"team":"Georgia","date":"1954-10-16","venue":"vs.","opponent":"*Vanderbilt(2-7)","pf":16,"pa":14}],"1957-W4":[{"team":"Missouri","date":"1957-10-11","venue":"@","opponent":"Southern Methodist(4-5-1)","pf":7,"pa":6},{"team":"Georgia","date":"1957-10-11","venue":"@","opponent":"*Tulane(2-8)","pf":13,"pa":6},{"team":"Maryland","date":"1957-10-12","venue":"vs.","opponent":"*Wake Forest(0-10)","pf":27,"pa":0},{"team":"Wisconsin","date":"1957-10-12","venue":"@","opponent":"*Purdue(5-4)","pf":23,"pa":14},{"team":"Virginia Tech","date":"1957-10-12","venue":"vs.","opponent":"Villanova(3-6)","pf":21,"pa":14}],"1960-W7":[{"team":"Maryland","date":"1960-10-29","venue":"vs.","opponent":"*South Carolina(3-6-1)","pf":15,"pa":0},{"team":"Wisconsin","date":"1960-10-29","venue":"vs.","opponent":"*Michigan(5-4)","pf":16,"pa":13},{"team":"Missouri","date":"1960-10-29","venue":"@","opponent":"*Nebraska(4-6)","pf":28,"pa":0},{"team":"Virginia Tech","date":"1960-10-29","venue":"@","opponent":"*Richmond(3-6-1)","pf":20,"pa":0},{"team":"Georgia","date":"1960-10-29","venue":"vs.","opponent":"Tulsa(5-5)","pf":45,"pa":7}],"1962-W5":[{"team":"Maryland","date":"1962-10-13","venue":"@","opponent":"*North Carolina(3-7)","pf":31,"pa":13},{"team":"Wisconsin","date":"1962-10-13","venue":"vs.","opponent":"Notre Dame(5-5)","pf":17,"pa":8},{"team":"Missouri","date":"1962-10-13","venue":"@","opponent":"*Kansas State(0-10)","pf":32,"pa":0},{"team":"Virginia Tech","date":"1962-10-13","venue":"vs.","opponent":"*Richmond(6-3)","pf":13,"pa":7},{"team":"Georgia","date":"1962-10-13","venue":"@","opponent":"Clemson(6-4)","pf":24,"pa":16}],"1963-W5":[{"team":"Georgia","date":"1963-10-18","venue":"@","opponent":"Miami (Florida)(3-7)","pf":31,"pa":14},{"team":"Maryland","date":"1963-10-19","venue":"vs.","opponent":"Air Force(7-4)","pf":21,"pa":14},{"team":"Wisconsin","date":"1963-10-19","venue":"@","opponent":"*Iowa(3-3-2)","pf":10,"pa":7},{"team":"Missouri","date":"1963-10-19","venue":"@","opponent":"*Oklahoma State(1-8)","pf":28,"pa":6},{"team":"Virginia Tech","date":"1963-10-19","venue":"vs.","opponent":"*William & Mary(4-6)","pf":28,"pa":13}],"1974-W7":[{"team":"Maryland","date":"1974-10-26","venue":"vs.","opponent":"*North Carolina State(9-2-1)","pf":20,"pa":10},{"team":"Wisconsin","date":"1974-10-26","venue":"@","opponent":"*Indiana(1-10)","pf":35,"pa":25},{"team":"Missouri","date":"1974-10-26","venue":"vs.","opponent":"*Colorado(5-6)","pf":30,"pa":24},{"team":"Virginia Tech","date":"1974-10-26","venue":"vs.","opponent":"Richmond(5-5)","pf":41,"pa":7},{"team":"Georgia","date":"1974-10-26","venue":"@","opponent":"*Kentucky(6-5)","pf":24,"pa":20}],"1976-W8":[{"team":"Maryland","date":"1976-10-23","venue":"@","opponent":"*Duke(5-5-1)","pf":30,"pa":3},{"team":"Wisconsin","date":"1976-10-23","venue":"@","opponent":"*Northwestern(1-10)","pf":28,"pa":25},{"team":"Missouri","date":"1976-10-23","venue":"@","opponent":"*Nebraska(9-3-1)","pf":34,"pa":24},{"team":"Virginia Tech","date":"1976-10-23","venue":"vs.","opponent":"Kent State(8-4)","pf":42,"pa":14},{"team":"Georgia","date":"1976-10-23","venue":"@","opponent":"*Kentucky(8-4)","pf":31,"pa":7}],"1980-W7":[{"team":"Maryland","date":"1980-10-18","venue":"vs.","opponent":"*Wake Forest(5-6)","pf":11,"pa":10},{"team":"Wisconsin","date":"1980-10-18","venue":"@","opponent":"*Michigan State(3-8)","pf":17,"pa":7},{"team":"Missouri","date":"1980-10-18","venue":"vs.","opponent":"*Colorado(1-10)","pf":45,"pa":7},{"team":"Virginia Tech","date":"1980-10-18","venue":"vs.","opponent":"Virginia(4-7)","pf":30,"pa":0},{"team":"Georgia","date":"1980-10-18","venue":"vs.","opponent":"*Vanderbilt(2-9)","pf":41,"pa":0}],"1981-W4":[{"team":"Maryland","date":"1981-09-26","venue":"@","opponent":"*North Carolina State(4-7)","pf":34,"pa":9},{"team":"Wisconsin","date":"1981-09-26","venue":"vs.","opponent":"Western Michigan(6-5)","pf":21,"pa":10},{"team":"Missouri","date":"1981-09-26","venue":"vs.","opponent":"Louisville(5-6)","pf":34,"pa":3},{"team":"Virginia Tech","date":"1981-09-26","venue":"vs.","opponent":"Wake Forest(4-7)","pf":30,"pa":14},{"team":"Georgia","date":"1981-09-26","venue":"vs.","opponent":"South Carolina(6-6)","pf":24,"pa":0}],"1983-W8":[{"team":"Maryland","date":"1983-10-22","venue":"vs.","opponent":"*Duke(3-8)","pf":38,"pa":3},{"team":"Wisconsin","date":"1983-10-22","venue":"vs.","opponent":"*Indiana(3-8)","pf":45,"pa":14},{"team":"Missouri","date":"1983-10-22","venue":"vs.","opponent":"*Kansas State(3-8)","pf":38,"pa":0},{"team":"Virginia Tech","date":"1983-10-22","venue":"vs.","opponent":"Richmond(3-8)","pf":38,"pa":0},{"team":"Georgia","date":"1983-10-22","venue":"vs.","opponent":"*Kentucky(6-5-1)","pf":47,"pa":21}],"1985-W10":[{"team":"Maryland","date":"1985-11-02","venue":"vs.","opponent":"*North Carolina(5-6)","pf":28,"pa":10},{"team":"Wisconsin","date":"1985-11-02","venue":"vs.","opponent":"*Indiana(4-7)","pf":31,"pa":20},{"team":"Missouri","date":"1985-11-02","venue":"@","opponent":"*Iowa State(5-6)","pf":28,"pa":27},{"team":"Virginia Tech","date":"1985-11-02","venue":"vs.","opponent":"Memphis(2-7-2)","pf":31,"pa":10},{"team":"Georgia","date":"1985-11-02","venue":"vs.","opponent":"Tulane(1-10)","pf":58,"pa":3}],"1986-W3":[{"team":"Maryland","date":"1986-09-13","venue":"vs.","opponent":"Vanderbilt(1-10)","pf":35,"pa":21},{"team":"Wisconsin","date":"1986-09-13","venue":"vs.","opponent":"Northern Illinois(2-9)","pf":35,"pa":20},{"team":"Missouri","date":"1986-09-13","venue":"vs.","opponent":"Utah State(3-8)","pf":24,"pa":10},{"team":"Virginia Tech","date":"1986-09-13","venue":"@","opponent":"Clemson(8-2-2)","pf":20,"pa":14},{"team":"Georgia","date":"1986-09-13","venue":"vs.","opponent":"Duke(4-7)","pf":31,"pa":7}],"1986-W9":[{"team":"Maryland","date":"1986-10-25","venue":"@","opponent":"*Duke(4-7)","pf":27,"pa":19},{"team":"Wisconsin","date":"1986-10-25","venue":"vs.","opponent":"*Illinois(4-7)","pf":15,"pa":9},{"team":"Missouri","date":"1986-10-25","venue":"@","opponent":"*Kansas State(2-9)","pf":17,"pa":6},{"team":"Virginia Tech","date":"1986-10-25","venue":"vs.","opponent":"Virginia(3-8)","pf":42,"pa":10},{"team":"Georgia","date":"1986-10-25","venue":"@","opponent":"*Kentucky(5-5-1)","pf":31,"pa":9}],"1993-W7":[{"team":"Maryland","date":"1993-10-16","venue":"vs.","opponent":"*Duke(3-8)","pf":26,"pa":18},{"team":"Wisconsin","date":"1993-10-16","venue":"@","opponent":"*Purdue(1-10)","pf":42,"pa":28},{"team":"Missouri","date":"1993-10-16","venue":"vs.","opponent":"*Oklahoma State(3-8)","pf":42,"pa":9},{"team":"Virginia Tech","date":"1993-10-16","venue":"vs.","opponent":"*Temple(1-10)","pf":55,"pa":7},{"team":"Georgia","date":"1993-10-16","venue":"@","opponent":"*Vanderbilt(4-7)","pf":41,"pa":3}],"1998-W1":[{"team":"Maryland","date":"1998-09-05","venue":"vs.","opponent":"James Madison (non-IA)","pf":23,"pa":15},{"team":"Wisconsin","date":"1998-09-05","venue":"@","opponent":"San Diego State(7-5)","pf":26,"pa":14},{"team":"Missouri","date":"1998-09-05","venue":"vs.","opponent":"Bowling Green(5-6)","pf":37,"pa":0},{"team":"Virginia Tech","date":"1998-09-05","venue":"vs.","opponent":"East Carolina(6-5)","pf":38,"pa":3},{"team":"Georgia","date":"1998-09-05","venue":"vs.","opponent":"Kent State(0-11)","pf":56,"pa":3}],"1999-W1":[{"team":"Maryland","date":"1999-09-02","venue":"@","opponent":"Temple(2-9)","pf":6,"pa":0},{"team":"Wisconsin","date":"1999-09-04","venue":"vs.","opponent":"Murray State (non-IA)","pf":49,"pa":10},{"team":"Missouri","date":"1999-09-04","venue":"vs.","opponent":"Alabama-Birmingham(5-6)","pf":31,"pa":28},{"team":"Virginia Tech","date":"1999-09-04","venue":"vs.","opponent":"James Madison (non-IA)","pf":47,"pa":0},{"team":"Georgia","date":"1999-09-04","venue":"vs.","opponent":"Utah State(4-7)","pf":38,"pa":7}],"2002-W10":[{"team":"Maryland","date":"2002-10-26","venue":"@","opponent":"*Duke(2-10)","pf":45,"pa":12},{"team":"Wisconsin","date":"2002-10-26","venue":"@","opponent":"*Michigan State(4-8)","pf":42,"pa":24},{"team":"Missouri","date":"2002-10-26","venue":"vs.","opponent":"*Kansas(2-10)","pf":36,"pa":12},{"team":"Virginia Tech","date":"2002-10-26","venue":"vs.","opponent":"*Temple(4-8)","pf":20,"pa":10},{"team":"Georgia","date":"2002-10-26","venue":"@","opponent":"*Kentucky(7-5)","pf":52,"pa":24}],"2003-W7":[{"team":"Maryland","date":"2003-10-11","venue":"vs.","opponent":"*Duke(4-8)","pf":33,"pa":20},{"team":"Wisconsin","date":"2003-10-11","venue":"vs.","opponent":"*Ohio State(11-2)","pf":17,"pa":10},{"team":"Missouri","date":"2003-10-11","venue":"vs.","opponent":"*Nebraska(10-3)","pf":41,"pa":24},{"team":"Virginia Tech","date":"2003-10-11","venue":"vs.","opponent":"*Syracuse(6-6)","pf":51,"pa":7},{"team":"Georgia","date":"2003-10-11","venue":"@","opponent":"*Tennessee(10-3)","pf":41,"pa":14}],"2003-W12":[{"team":"Maryland","date":"2003-11-13","venue":"vs.","opponent":"*Virginia(8-5)","pf":27,"pa":17},{"team":"Wisconsin","date":"2003-11-15","venue":"vs.","opponent":"*Michigan State(8-5)","pf":56,"pa":21},{"team":"Missouri","date":"2003-11-15","venue":"vs.","opponent":"*Texas A&M(4-8)","pf":45,"pa":22},{"team":"Virginia Tech","date":"2003-11-15","venue":"@","opponent":"*Temple(1-11)","pf":24,"pa":23},{"team":"Georgia","date":"2003-11-15","venue":"vs.","opponent":"*Auburn(8-5)","pf":26,"pa":7}],"2005-W1":[{"team":"Maryland","date":"2005-09-03","venue":"vs.","opponent":"Navy(8-4)","pf":23,"pa":20},{"team":"Wisconsin","date":"2005-09-03","venue":"vs.","opponent":"Bowling Green(6-5)","pf":56,"pa":42},{"team":"Missouri","date":"2005-09-03","venue":"vs.","opponent":"Arkansas State(6-6)","pf":44,"pa":17},{"team":"Georgia","date":"2005-09-03","venue":"vs.","opponent":"Boise State(9-4)","pf":48,"pa":13},{"team":"Virginia Tech","date":"2005-09-04","venue":"@","opponent":"*North Carolina State(7-5)","pf":20,"pa":16}],"2006-W1":[{"team":"Maryland","date":"2006-09-02","venue":"vs.","opponent":"William & Mary (non-IA)","pf":27,"pa":14},{"team":"Wisconsin","date":"2006-09-02","venue":"vs.","opponent":"Bowling Green(4-8)","pf":35,"pa":14},{"team":"Missouri","date":"2006-09-02","venue":"vs.","opponent":"Murray State (non-IA)","pf":47,"pa":7},{"team":"Virginia Tech","date":"2006-09-02","venue":"vs.","opponent":"Northeastern (non-IA)","pf":38,"pa":0},{"team":"Georgia","date":"2006-09-02","venue":"vs.","opponent":"Western Kentucky (non-IA)","pf":48,"pa":12}],"2006-W2":[{"team":"Maryland","date":"2006-09-09","venue":"vs.","opponent":"Middle Tennessee State(7-6)","pf":24,"pa":10},{"team":"Wisconsin","date":"2006-09-09","venue":"vs.","opponent":"Western Illinois (non-IA)","pf":34,"pa":10},{"team":"Missouri","date":"2006-09-09","venue":"vs.","opponent":"Mississippi(4-8)","pf":34,"pa":7},{"team":"Virginia Tech","date":"2006-09-09","venue":"@","opponent":"*North Carolina(3-9)","pf":35,"pa":10},{"team":"Georgia","date":"2006-09-09","venue":"@","opponent":"*South Carolina(8-5)","pf":18,"pa":0}],"2006-W8":[{"team":"Maryland","date":"2006-10-21","venue":"vs.","opponent":"*North Carolina State(3-9)","pf":26,"pa":20},{"team":"Wisconsin","date":"2006-10-21","venue":"@","opponent":"*Purdue(8-6)","pf":24,"pa":3},{"team":"Missouri","date":"2006-10-21","venue":"vs.","opponent":"*Kansas State(7-6)","pf":41,"pa":21},{"team":"Virginia Tech","date":"2006-10-21","venue":"vs.","opponent":"Southern Mississippi(9-5)","pf":36,"pa":6},{"team":"Georgia","date":"2006-10-21","venue":"vs.","opponent":"*Mississippi State(3-9)","pf":27,"pa":24}],"2007-W1":[{"team":"Maryland","date":"2007-09-01","venue":"vs.","opponent":"Villanova (non-IA)","pf":31,"pa":14},{"team":"Wisconsin","date":"2007-09-01","venue":"vs.","opponent":"Washington State(5-7)","pf":42,"pa":21},{"team":"Missouri","date":"2007-09-01","venue":"vs.","opponent":"Illinois(9-4)","pf":40,"pa":34},{"team":"Virginia Tech","date":"2007-09-01","venue":"vs.","opponent":"East Carolina(8-5)","pf":17,"pa":7},{"team":"Georgia","date":"2007-09-01","venue":"vs.","opponent":"Oklahoma State(7-6)","pf":35,"pa":14}],"2007-W11":[{"team":"Maryland","date":"2007-11-10","venue":"vs.","opponent":"*Boston College(11-3)","pf":42,"pa":35},{"team":"Wisconsin","date":"2007-11-10","venue":"vs.","opponent":"*Michigan(9-4)","pf":37,"pa":21},{"team":"Missouri","date":"2007-11-10","venue":"vs.","opponent":"*Texas A&M(7-6)","pf":40,"pa":26},{"team":"Virginia Tech","date":"2007-11-10","venue":"vs.","opponent":"*Florida State(7-6)","pf":40,"pa":21},{"team":"Georgia","date":"2007-11-10","venue":"vs.","opponent":"*Auburn(9-4)","pf":45,"pa":20}],"2008-W3":[{"team":"Maryland","date":"2008-09-13","venue":"vs.","opponent":"California(9-4)","pf":35,"pa":27},{"team":"Wisconsin","date":"2008-09-13","venue":"@","opponent":"Fresno State(7-6)","pf":13,"pa":10},{"team":"Missouri","date":"2008-09-13","venue":"vs.","opponent":"Nevada(7-6)","pf":69,"pa":17},{"team":"Virginia Tech","date":"2008-09-13","venue":"vs.","opponent":"*Georgia Tech(9-4)","pf":20,"pa":17},{"team":"Georgia","date":"2008-09-13","venue":"@","opponent":"*South Carolina(7-6)","pf":14,"pa":7}],"2009-W2":[{"team":"Maryland","date":"2009-09-12","venue":"vs.","opponent":"James Madison (non-IA)","pf":38,"pa":35},{"team":"Wisconsin","date":"2009-09-12","venue":"vs.","opponent":"Fresno State(8-5)","pf":34,"pa":31},{"team":"Missouri","date":"2009-09-12","venue":"vs.","opponent":"Bowling Green(7-6)","pf":27,"pa":20},{"team":"Virginia Tech","date":"2009-09-12","venue":"vs.","opponent":"Marshall(7-6)","pf":52,"pa":10},{"team":"Georgia","date":"2009-09-12","venue":"vs.","opponent":"*South Carolina(7-6)","pf":41,"pa":37}],"2010-W8":[{"team":"Maryland","date":"2010-10-23","venue":"@","opponent":"*Boston College(7-6)","pf":24,"pa":21},{"team":"Wisconsin","date":"2010-10-23","venue":"@","opponent":"*Iowa(8-5)","pf":31,"pa":30},{"team":"Missouri","date":"2010-10-23","venue":"vs.","opponent":"*Oklahoma(12-2)","pf":36,"pa":27},{"team":"Virginia Tech","date":"2010-10-23","venue":"vs.","opponent":"*Duke(3-9)","pf":44,"pa":7},{"team":"Georgia","date":"2010-10-23","venue":"@","opponent":"*Kentucky(6-7)","pf":44,"pa":31}],"2010-W13":[{"team":"Maryland","date":"2010-11-27","venue":"vs.","opponent":"*North Carolina State(9-4)","pf":38,"pa":31},{"team":"Wisconsin","date":"2010-11-27","venue":"vs.","opponent":"*Northwestern(7-6)","pf":70,"pa":23},{"team":"Missouri","date":"2010-11-27","venue":"vs.","opponent":"*Kansas(3-9)","pf":35,"pa":7},{"team":"Virginia Tech","date":"2010-11-27","venue":"vs.","opponent":"*Virginia(4-8)","pf":37,"pa":7},{"team":"Georgia","date":"2010-11-27","venue":"vs.","opponent":"Georgia Tech(6-7)","pf":42,"pa":34}],"2012-W1":[{"team":"Maryland","date":"2012-09-01","venue":"vs.","opponent":"William & Mary (non-IA)","pf":7,"pa":6},{"team":"Wisconsin","date":"2012-09-01","venue":"vs.","opponent":"Northern Iowa (non-IA)","pf":26,"pa":21},{"team":"Missouri","date":"2012-09-01","venue":"vs.","opponent":"Southeastern Louisiana (non-IA)","pf":62,"pa":10},{"team":"Georgia","date":"2012-09-01","venue":"vs.","opponent":"Buffalo(4-8)","pf":45,"pa":23},{"team":"Virginia Tech","date":"2012-09-03","venue":"vs.","opponent":"*Georgia Tech(7-7)","pf":20,"pa":17}],"2013-W2":[{"team":"Maryland","date":"2013-09-07","venue":"vs.","opponent":"Old Dominion(8-4)","pf":47,"pa":10},{"team":"Wisconsin","date":"2013-09-07","venue":"vs.","opponent":"Tennessee Tech (non-IA)","pf":48,"pa":0},{"team":"Missouri","date":"2013-09-07","venue":"vs.","opponent":"Toledo(7-5)","pf":38,"pa":23},{"team":"Virginia Tech","date":"2013-09-07","venue":"vs.","opponent":"Western Carolina (non-IA)","pf":45,"pa":3},{"team":"Georgia","date":"2013-09-07","venue":"vs.","opponent":"*South Carolina(11-2)","pf":41,"pa":30}],"2013-W4":[{"team":"Maryland","date":"2013-09-21","venue":"vs.","opponent":"West Virginia(4-8)","pf":37,"pa":0},{"team":"Wisconsin","date":"2013-09-21","venue":"vs.","opponent":"*Purdue(1-11)","pf":41,"pa":10},{"team":"Missouri","date":"2013-09-21","venue":"@","opponent":"Indiana(5-7)","pf":45,"pa":28},{"team":"Virginia Tech","date":"2013-09-21","venue":"vs.","opponent":"Marshall(10-4)","pf":29,"pa":21},{"team":"Georgia","date":"2013-09-21","venue":"vs.","opponent":"North Texas(9-4)","pf":45,"pa":21}],"2014-W5":[{"team":"Maryland","date":"2014-09-27","venue":"@","opponent":"*Indiana(4-8)","pf":37,"pa":15},{"team":"Wisconsin","date":"2014-09-27","venue":"vs.","opponent":"South Florida(4-8)","pf":27,"pa":10},{"team":"Missouri","date":"2014-09-27","venue":"@","opponent":"*South Carolina(7-6)","pf":21,"pa":20},{"team":"Virginia Tech","date":"2014-09-27","venue":"vs.","opponent":"Western Michigan(8-5)","pf":35,"pa":17},{"team":"Georgia","date":"2014-09-27","venue":"vs.","opponent":"*Tennessee(7-6)","pf":35,"pa":32}],"2015-W3":[{"team":"Maryland","date":"2015-09-19","venue":"vs.","opponent":"South Florida(8-5)","pf":35,"pa":17},{"team":"Wisconsin","date":"2015-09-19","venue":"vs.","opponent":"Troy(4-8)","pf":28,"pa":3},{"team":"Missouri","date":"2015-09-19","venue":"vs.","opponent":"Connecticut(6-7)","pf":9,"pa":6},{"team":"Virginia Tech","date":"2015-09-19","venue":"@","opponent":"Purdue(2-10)","pf":51,"pa":24},{"team":"Georgia","date":"2015-09-19","venue":"vs.","opponent":"*South Carolina(3-9)","pf":52,"pa":20}],"2017-W1":[{"team":"Wisconsin","date":"2017-09-01","venue":"vs.","opponent":"Utah State(6-7)","pf":59,"pa":10},{"team":"Maryland","date":"2017-09-02","venue":"@","opponent":"Texas(7-6)","pf":51,"pa":41},{"team":"Missouri","date":"2017-09-02","venue":"vs.","opponent":"Missouri State (non-IA)","pf":72,"pa":43},{"team":"Georgia","date":"2017-09-02","venue":"vs.","opponent":"Appalachian State(9-4)","pf":31,"pa":10},{"team":"Virginia Tech","date":"2017-09-03","venue":"vs.","opponent":"West Virginia(7-6)","pf":31,"pa":24}],"2017-W9":[{"team":"Maryland","date":"2017-10-28","venue":"vs.","opponent":"*Indiana(5-7)","pf":42,"pa":39},{"team":"Wisconsin","date":"2017-10-28","venue":"@","opponent":"*Illinois(2-10)","pf":24,"pa":10},{"team":"Missouri","date":"2017-10-28","venue":"@","opponent":"Connecticut(3-9)","pf":52,"pa":12},{"team":"Virginia Tech","date":"2017-10-28","venue":"vs.","opponent":"*Duke(7-6)","pf":24,"pa":3},{"team":"Georgia","date":"2017-10-28","venue":"vs.","opponent":"*Florida(4-7)","pf":42,"pa":7}],"2018-W1":[{"team":"Wisconsin","date":"2018-08-31","venue":"vs.","opponent":"Western Kentucky(3-9)","pf":34,"pa":3},{"team":"Maryland","date":"2018-09-01","venue":"vs.","opponent":"Texas(10-4)","pf":34,"pa":29},{"team":"Missouri","date":"2018-09-01","venue":"vs.","opponent":"Tennessee-Martin (non-IA)","pf":51,"pa":14},{"team":"Georgia","date":"2018-09-01","venue":"vs.","opponent":"Austin Peay (non-IA)","pf":45,"pa":0},{"team":"Virginia Tech","date":"2018-09-03","venue":"@","opponent":"*Florida State(5-7)","pf":24,"pa":3}],"2018-W2":[{"team":"Maryland","date":"2018-09-08","venue":"@","opponent":"Bowling Green(3-9)","pf":45,"pa":14},{"team":"Wisconsin","date":"2018-09-08","venue":"vs.","opponent":"New Mexico(3-9)","pf":45,"pa":14},{"team":"Missouri","date":"2018-09-08","venue":"vs.","opponent":"Wyoming(6-6)","pf":40,"pa":13},{"team":"Virginia Tech","date":"2018-09-08","venue":"vs.","opponent":"William & Mary (non-IA)","pf":62,"pa":17},{"team":"Georgia","date":"2018-09-08","venue":"@","opponent":"*South Carolina(7-6)","pf":41,"pa":17}],"2019-W2":[{"team":"Maryland","date":"2019-09-07","venue":"vs.","opponent":"Syracuse(5-7)","pf":63,"pa":20},{"team":"Wisconsin","date":"2019-09-07","venue":"vs.","opponent":"Central Michigan(8-6)","pf":61,"pa":0},{"team":"Missouri","date":"2019-09-07","venue":"vs.","opponent":"West Virginia(5-7)","pf":38,"pa":7},{"team":"Virginia Tech","date":"2019-09-07","venue":"vs.","opponent":"Old Dominion(1-11)","pf":31,"pa":17},{"team":"Georgia","date":"2019-09-07","venue":"vs.","opponent":"Murray State (non-IA)","pf":63,"pa":17}],"2019-W6":[{"team":"Maryland","date":"2019-10-05","venue":"@","opponent":"*Rutgers(2-10)","pf":48,"pa":7},{"team":"Wisconsin","date":"2019-10-05","venue":"vs.","opponent":"Kent State(7-6)","pf":48,"pa":0},{"team":"Missouri","date":"2019-10-05","venue":"vs.","opponent":"Troy(5-7)","pf":42,"pa":10},{"team":"Virginia Tech","date":"2019-10-05","venue":"@","opponent":"*Miami (Florida)(6-7)","pf":42,"pa":35},{"team":"Georgia","date":"2019-10-05","venue":"@","opponent":"*Tennessee(8-5)","pf":43,"pa":14}],"2021-W9":[{"team":"Maryland","date":"2021-10-30","venue":"vs.","opponent":"*Indiana(2-10)","pf":38,"pa":35},{"team":"Wisconsin","date":"2021-10-30","venue":"vs.","opponent":"*Iowa(10-4)","pf":27,"pa":7},{"team":"Missouri","date":"2021-10-30","venue":"@","opponent":"*Vanderbilt(2-10)","pf":37,"pa":28},{"team":"Virginia Tech","date":"2021-10-30","venue":"@","opponent":"*Georgia Tech(3-9)","pf":26,"pa":17},{"team":"Georgia","date":"2021-10-30","venue":"vs.","opponent":"*Florida(6-7)","pf":34,"pa":7}],"2022-W3":[{"team":"Maryland","date":"2022-09-17","venue":"vs.","opponent":"Southern Methodist(7-6)","pf":34,"pa":27},{"team":"Wisconsin","date":"2022-09-17","venue":"vs.","opponent":"New Mexico State(7-6)","pf":66,"pa":7},{"team":"Missouri","date":"2022-09-17","venue":"vs.","opponent":"Abilene Christian (non-IA)","pf":34,"pa":17},{"team":"Virginia Tech","date":"2022-09-17","venue":"vs.","opponent":"Wofford (non-IA)","pf":27,"pa":7},{"team":"Georgia","date":"2022-09-17","venue":"@","opponent":"*South Carolina(8-5)","pf":48,"pa":7}],"2023-W1":[{"team":"Missouri","date":"2023-08-31","venue":"vs.","opponent":"South Dakota (non-IA)","pf":35,"pa":10},{"team":"Maryland","date":"2023-09-02","venue":"vs.","opponent":"Towson (non-IA)","pf":38,"pa":6},{"team":"Wisconsin","date":"2023-09-02","venue":"vs.","opponent":"Buffalo(3-9)","pf":38,"pa":17},{"team":"Virginia Tech","date":"2023-09-02","venue":"vs.","opponent":"Old Dominion(6-7)","pf":36,"pa":17},{"team":"Georgia","date":"2023-09-02","venue":"vs.","opponent":"Tennessee-Martin (non-IA)","pf":48,"pa":7}],"2023-W13":[{"team":"Missouri","date":"2023-11-24","venue":"@","opponent":"*Arkansas(4-8)","pf":48,"pa":14},{"team":"Maryland","date":"2023-11-25","venue":"@","opponent":"*Rutgers(7-6)","pf":42,"pa":24},{"team":"Wisconsin","date":"2023-11-25","venue":"@","opponent":"*Minnesota(6-7)","pf":28,"pa":14},{"team":"Virginia Tech","date":"2023-11-25","venue":"@","opponent":"*Virginia(3-9)","pf":55,"pa":17},{"team":"Georgia","date":"2023-11-25","venue":"@","opponent":"Georgia Tech(7-6)","pf":31,"pa":23}],"2024-W8":[{"team":"Virginia Tech","date":"2024-10-17","venue":"vs.","opponent":"*Boston College(7-6)","pf":42,"pa":21},{"team":"Maryland","date":"2024-10-19","venue":"vs.","opponent":"*Southern California(7-6)","pf":29,"pa":28},{"team":"Wisconsin","date":"2024-10-19","venue":"@","opponent":"*Northwestern(4-8)","pf":23,"pa":3},{"team":"Missouri","date":"2024-10-19","venue":"vs.","opponent":"*Auburn(5-7)","pf":21,"pa":17},{"team":"Georgia","date":"2024-10-19","venue":"@","opponent":"*Texas(13-3)","pf":30,"pa":15}]};
+
+const TEAM_COLORS = {
+  "Maryland": "var(--team-maryland)",
+  "Wisconsin": "var(--team-wisconsin)",
+  "Missouri": "var(--team-missouri)",
+  "Virginia Tech": "var(--team-vt)",
+  "Georgia": "var(--team-georgia)"
+};
+
+// ---------- Lineup chips ----------
+const lineupEl = document.getElementById('lineup');
+DATA.metadata.teams.forEach(t => {
+  const s = document.createElement('span');
+  s.textContent = t;
+  lineupEl.appendChild(s);
+});
+
+// ---------- Hero digits ----------
+document.getElementById('totalDigits').textContent = DATA.summary.totalPerfectWeeks;
+
+// ---------- Stats row ----------
+function weekToReadable(w){
+  const [year, wk] = w.split('-W');
+  return {year, wk: parseInt(wk,10)};
+}
+const last = weekToReadable(DATA.summary.lastPerfectWeek);
+document.getElementById('lastWeek').textContent = DATA.summary.lastPerfectWeek;
+document.getElementById('lastWeekSub').textContent = `Week ${last.wk} of ${last.year}`;
+
+const first = weekToReadable(DATA.summary.firstPerfectWeek);
+document.getElementById('firstWeek').textContent = DATA.summary.firstPerfectWeek;
+document.getElementById('firstWeekSub').textContent = `Week ${first.wk} of ${first.year}`;
+
+document.getElementById('topRuiner').textContent = DATA.summary.mostCommonRuiner;
+document.getElementById('topRuinerSub').textContent =
+  `${DATA.ruiners[DATA.summary.mostCommonRuiner]} weeks spoiled`;
+
+// ---------- Records grid ----------
+function formatDuration(days){
+  const years = Math.floor(days / 365.25);
+  const remDays = days - Math.floor(years * 365.25);
+  const months = Math.floor(remDays / 30.44);
+  if (years > 0 && months > 0) return `${years}y ${months}m`;
+  if (years > 0) return `${years}y`;
+  const weeks = Math.floor(days / 7);
+  return `${weeks}w`;
+}
+
+const recordsGrid = document.getElementById('recordsGrid');
+const stats = DATA.stats;
+
+function recordCard({label, value, ongoing, detailHTML, full}){
+  const card = document.createElement('div');
+  card.className = 'record-card' + (full ? ' full' : '');
+  card.innerHTML = `
+    <div class="r-label">${label}</div>
+    <div class="r-value${ongoing ? ' ongoing' : ''}">${value}</div>
+    ${detailHTML ? `<div class="r-detail">${detailHTML}</div>` : ''}
+  `;
+  return card;
+}
+
+const droughtCard = recordCard({
+  label: 'Longest Drought',
+  value: formatDuration(stats.longestDrought.days),
+  detailHTML: `<button data-week="${stats.longestDrought.from}">${stats.longestDrought.from}</button> to <button data-week="${stats.longestDrought.to}">${stats.longestDrought.to}</button>`
+});
+recordsGrid.appendChild(droughtCard);
+
+const currentDroughtCard = recordCard({
+  label: 'Current Drought',
+  value: formatDuration(stats.currentDrought.days) + ' and counting',
+  ongoing: true,
+  detailHTML: `Since <button data-week="${stats.currentDrought.since}">${stats.currentDrought.since}</button>`
+});
+recordsGrid.appendChild(currentDroughtCard);
+
+const b2bDetail = stats.backToBack.map(([season, w1, w2]) =>
+  `<button data-week="${season}-W${w1}">${season}-W${w1}</button> → <button data-week="${season}-W${w2}">${season}-W${w2}</button>`
+).join('<br>');
+const b2bCard = recordCard({
+  label: 'Back-to-Back Weeks',
+  value: `${stats.backToBack.length} time${stats.backToBack.length === 1 ? '' : 's'}`,
+  detailHTML: stats.backToBack.length ? b2bDetail : 'Never happened — yet.',
+  full: true
+});
+recordsGrid.appendChild(b2bCard);
+
+const blowoutCard = recordCard({
+  label: 'Biggest Combined Blowout',
+  value: `+${stats.biggestBlowout.margin} pts`,
+  detailHTML: `<button data-week="${stats.biggestBlowout.label}">${stats.biggestBlowout.label}</button>`
+});
+recordsGrid.appendChild(blowoutCard);
+
+const closestCard = recordCard({
+  label: 'Closest Call',
+  value: `+${stats.closestCall.margin} pts`,
+  detailHTML: `<button data-week="${stats.closestCall.label}">${stats.closestCall.label}</button>`
+});
+recordsGrid.appendChild(closestCard);
+
+recordsGrid.querySelectorAll('button[data-week]').forEach(btn => {
+  btn.addEventListener('click', () => openScoreModal(btn.getAttribute('data-week')));
+});
+
+// ---------- Timeline ----------
+const timelineTrack = document.getElementById('timelineTrack');
+const TRACK_WIDTH = 2200;
+const timelineDates = DATA.timeline.map(t => new Date(t.date).getTime());
+const minTime = Math.min(...timelineDates);
+const maxTime = new Date().getTime();
+
+const line = document.createElement('div');
+line.className = 'timeline-line';
+timelineTrack.appendChild(line);
+
+// decade ticks
+const startYear = new Date(minTime).getFullYear();
+const endYear = new Date(maxTime).getFullYear();
+for (let y = Math.ceil(startYear / 10) * 10; y <= endYear; y += 10) {
+  const t = new Date(y, 0, 1).getTime();
+  const pct = (t - minTime) / (maxTime - minTime);
+  const tick = document.createElement('div');
+  tick.className = 'timeline-tick';
+  tick.style.left = `${pct * TRACK_WIDTH}px`;
+  tick.textContent = y;
+  timelineTrack.appendChild(tick);
+}
+
+DATA.timeline.forEach(t => {
+  const time = new Date(t.date).getTime();
+  const pct = (time - minTime) / (maxTime - minTime);
+  const dot = document.createElement('button');
+  dot.className = 'timeline-dot';
+  dot.style.left = `${pct * TRACK_WIDTH}px`;
+  dot.setAttribute('aria-label', `Perfect Week ${t.label}`);
+  dot.title = t.label;
+  dot.addEventListener('click', () => openScoreModal(t.label));
+  timelineTrack.appendChild(dot);
+});
+
+// scroll timeline to the right (most recent) on load
+document.querySelector('.timeline-scroll').scrollLeft = TRACK_WIDTH;
+
+// ---------- Perfect weeks list, grouped by decade ----------
+const weeksListEl = document.getElementById('weeksList');
+const byDecade = {};
+DATA.perfectWeeks.forEach(w => {
+  const year = parseInt(w.split('-W')[0], 10);
+  const decade = Math.floor(year / 10) * 10;
+  if (!byDecade[decade]) byDecade[decade] = [];
+  byDecade[decade].push(w);
+});
+Object.keys(byDecade).sort((a,b) => a - b).forEach(decade => {
+  const group = document.createElement('div');
+  group.className = 'decade-group';
+
+  const h3 = document.createElement('h3');
+  h3.textContent = `${decade}s`;
+  group.appendChild(h3);
+
+  const chips = document.createElement('div');
+  chips.className = 'week-chips';
+  byDecade[decade].forEach(w => {
+    const chip = document.createElement('span');
+    chip.textContent = w;
+    chip.tabIndex = 0;
+    chip.setAttribute('role', 'button');
+    chip.setAttribute('aria-haspopup', 'dialog');
+    const openForThisWeek = () => openScoreModal(w);
+    chip.addEventListener('click', openForThisWeek);
+    chip.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openForThisWeek(); }
+    });
+    chips.appendChild(chip);
+  });
+  group.appendChild(chips);
+  weeksListEl.appendChild(group);
+});
+
+// Toggle behavior
+const toggleBtn = document.getElementById('totalDigits');
+const panel = document.getElementById('weeks-panel');
+toggleBtn.addEventListener('click', () => {
+  const isOpen = panel.classList.toggle('open');
+  toggleBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+  if (isOpen) {
+    document.getElementById('weeks-section').scrollIntoView({behavior:'smooth', block:'start'});
+  }
+});
+
+// ---------- So Close (near misses) ----------
+const nearMissListEl = document.getElementById('nearMissList');
+DATA.recentNearMisses.forEach(nm => {
+  const row = document.createElement('button');
+  row.className = 'near-miss-row';
+  row.innerHTML = `
+    <span class="nm-left">
+      <span class="nm-week">${nm.label}</span>
+      <span class="nm-ruiner"><span class="swatch" style="background:${TEAM_COLORS[nm.ruiner] || 'var(--rust)'}"></span>${nm.ruiner} lost</span>
+    </span>
+    <span class="nm-arrow">view scores</span>
+  `;
+  row.addEventListener('click', () => openNearMissModal(nm));
+  nearMissListEl.appendChild(row);
+});
+
+// ---------- Ruiners leaderboard ----------
+const barsEl = document.getElementById('bars');
+const sortedRuiners = Object.entries(DATA.ruiners).sort((a,b) => b[1]-a[1]);
+const maxCount = sortedRuiners[0][1];
+sortedRuiners.forEach(([team, count], i) => {
+  const row = document.createElement('div');
+  row.className = 'bar-row' + (i === 0 ? ' top' : '');
+
+  const name = document.createElement('div');
+  name.className = 'name';
+  name.textContent = team;
+
+  const track = document.createElement('div');
+  track.className = 'bar-track';
+  const fill = document.createElement('div');
+  fill.className = 'bar-fill';
+  fill.style.width = `${(count / maxCount) * 100}%`;
+  track.appendChild(fill);
+
+  const num = document.createElement('div');
+  num.className = 'count';
+  num.textContent = count;
+
+  row.appendChild(name);
+  row.appendChild(track);
+  row.appendChild(num);
+  barsEl.appendChild(row);
+});
+
+// ---------- Score modal ----------
+const overlay = document.getElementById('scoreOverlay');
+const modalTitle = document.getElementById('scoreModalTitle');
+const modalSub = document.getElementById('scoreModalSub');
+const gamesEl = document.getElementById('scoreGames');
+const closeBtn = document.getElementById('scoreCloseBtn');
+let lastFocused = null;
+
+function formatDate(iso){
+  const [y,m,d] = iso.split('-').map(Number);
+  const dt = new Date(y, m-1, d);
+  return dt.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+}
+
+function renderGame(g, isLoss){
+  const div = document.createElement('div');
+  div.className = 'score-game' + (isLoss ? ' is-loss' : '');
+
+  const bar = document.createElement('div');
+  bar.className = 'team-bar';
+  bar.style.background = TEAM_COLORS[g.team] || 'var(--gold)';
+
+  const body = document.createElement('div');
+  body.className = 'game-body';
+
+  const teamLine = document.createElement('div');
+  teamLine.className = 'team-line';
+  const teamName = document.createElement('span');
+  teamName.className = 'team-name';
+  teamName.textContent = g.team;
+  const score = document.createElement('span');
+  score.className = 'score';
+  score.textContent = `${g.pf}\u2013${g.pa}`;
+  teamLine.appendChild(teamName);
+  teamLine.appendChild(score);
+
+  const oppLine = document.createElement('div');
+  oppLine.className = 'opp-line';
+  const vs = g.venue === '@' ? 'at' : 'vs.';
+  oppLine.textContent = `${vs} ${g.opponent}`;
+
+  const dateLine = document.createElement('div');
+  dateLine.className = 'date-line';
+  dateLine.textContent = formatDate(g.date);
+
+  body.appendChild(teamLine);
+  body.appendChild(oppLine);
+  body.appendChild(dateLine);
+
+  div.appendChild(bar);
+  div.appendChild(body);
+  return div;
+}
+
+function openScoreModal(week){
+  const games = SCORES[week];
+  modalTitle.textContent = week;
+  modalSub.textContent = 'Perfect Week — all five teams won';
+  gamesEl.innerHTML = '';
+
+  if (!games || games.length === 0) {
+    const p = document.createElement('p');
+    p.style.color = 'var(--chalk-dim)';
+    p.style.fontSize = '14px';
+    p.textContent = 'Scores for this week haven\u2019t been added yet.';
+    gamesEl.appendChild(p);
+  } else {
+    games.forEach(g => gamesEl.appendChild(renderGame(g, false)));
+  }
+
+  showModal();
+}
+
+function openNearMissModal(nm){
+  modalTitle.textContent = nm.label;
+  modalSub.textContent = `So close — ${nm.ruiner} was the only loss`;
+  gamesEl.innerHTML = '';
+  nm.games.forEach(g => {
+    const isLoss = g.team === nm.ruiner;
+    gamesEl.appendChild(renderGame(g, isLoss));
+  });
+  showModal();
+}
+
+function showModal(){
+  lastFocused = document.activeElement;
+  overlay.classList.add('open');
+  closeBtn.focus();
+}
+
+function closeScoreModal(){
+  overlay.classList.remove('open');
+  if (lastFocused) lastFocused.focus();
+}
+
+closeBtn.addEventListener('click', closeScoreModal);
+overlay.addEventListener('click', (e) => {
+  if (e.target === overlay) closeScoreModal();
+});
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && overlay.classList.contains('open')) closeScoreModal();
+});
+</script>
+
+</body>
+</html>
